@@ -40,7 +40,7 @@ const InfoTooltip = ({ text, align = "center", side = "top" }) => {
     >
       <Info className={`w-3.5 h-3.5 transition-colors ${isOpen ? 'text-blue-500' : 'text-slate-400'}`} />
       {isOpen && (
-        <span className={`absolute ${sideClass} ${alignClass} w-max max-w-[220px] sm:max-w-[260px] p-2.5 bg-slate-800 text-white text-xs rounded-md shadow-2xl text-left font-normal normal-case tracking-normal leading-relaxed pointer-events-none`}>
+        <span className={`absolute ${sideClass} ${alignClass} w-max max-w-[220px] sm:max-w-[260px] p-2.5 bg-slate-900 text-white text-xs rounded-md shadow-2xl text-left font-normal normal-case tracking-normal leading-relaxed pointer-events-none`}>
           {text}
           <span className={`absolute ${arrowSideClass} ${arrowClass} border-4 border-transparent`}></span>
         </span>
@@ -272,20 +272,20 @@ function App() {
                 <Input type="number" value={baseCapital} onChange={(e) => setBaseCapital(e.target.value)} />
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-2 sm:gap-4">
                 <div className="space-y-2">
-                  <Label className="flex items-center">
+                  <Label className="flex items-center text-xs sm:text-sm tracking-tight">
                     Start Date
                     <InfoTooltip align="left" text="The beginning of the historical lookback period used to calculate volatility and drift." />
                   </Label>
-                  <Input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                  <Input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="px-2 sm:px-3 text-xs sm:text-sm" />
                 </div>
                 <div className="space-y-2">
-                  <Label className="flex items-center">
+                  <Label className="flex items-center text-xs sm:text-sm tracking-tight">
                     End Date
                     <InfoTooltip align="right" text="The end of the historical lookback period." />
                   </Label>
-                  <Input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                  <Input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="px-2 sm:px-3 text-xs sm:text-sm" />
                 </div>
               </div>
 
