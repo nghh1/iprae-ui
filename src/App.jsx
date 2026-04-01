@@ -12,6 +12,8 @@ const LINE_COLORS = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06
 
 // Tooltip component (Adaptive Width & Safe Positioning)
 const InfoTooltip = ({ text, align = "center", side = "top" }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   let alignClass = "left-1/2 -translate-x-1/2";
   let arrowClass = "left-1/2 -translate-x-1/2";
   
@@ -25,15 +27,24 @@ const InfoTooltip = ({ text, align = "center", side = "top" }) => {
 
   const isTop = side === "top";
   const sideClass = isTop ? "bottom-full mb-2" : "top-full mt-2";
-  const arrowSideClass = isTop ? "top-full border-t-slate-800" : "bottom-full border-b-slate-800";
+  const arrowSideClass = isTop ? "top-full border-t-slate-900" : "bottom-full border-b-slate-900";
 
   return (
-    <span className="group relative inline-flex items-center justify-center ml-1.5 cursor-help z-50">
-      <Info className="w-3.5 h-3.5 text-slate-400 hover:text-blue-500 transition-colors" />
-      <span className={`absolute ${sideClass} ${alignClass} hidden group-hover:block w-max max-w-[220px] sm:max-w-[260px] p-2.5 bg-slate-800 text-white text-xs rounded-md shadow-xl text-left font-normal normal-case tracking-normal leading-relaxed pointer-events-none`}>
-        {text}
-        <span className={`absolute ${arrowSideClass} ${arrowClass} border-4 border-transparent`}></span>
-      </span>
+    <span 
+      tabIndex={0}
+      className="relative inline-flex items-center justify-center ml-1.5 cursor-pointer z-50 outline-none"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+      onClick={() => setIsOpen(!isOpen)}
+      onBlur={() => setIsOpen(false)}
+    >
+      <Info className={`w-3.5 h-3.5 transition-colors ${isOpen ? 'text-blue-500' : 'text-slate-400'}`} />
+      {isOpen && (
+        <span className={`absolute ${sideClass} ${alignClass} w-max max-w-[220px] sm:max-w-[260px] p-2.5 bg-slate-800 text-white text-xs rounded-md shadow-2xl text-left font-normal normal-case tracking-normal leading-relaxed pointer-events-none`}>
+          {text}
+          <span className={`absolute ${arrowSideClass} ${arrowClass} border-4 border-transparent`}></span>
+        </span>
+      )}
     </span>
   );
 };
@@ -293,7 +304,7 @@ function App() {
               {/* Slider 2: Simulations */}
               <div className="space-y-2">
                 <Label className="flex items-center">
-                  Monte Carlo Paths
+                  Simulations
                   <InfoTooltip align="left" text="Number of simulated futures. Higher numbers increase accuracy but take longer to calculate." />
                 </Label>
                 <div className="flex items-center gap-3">
@@ -347,8 +358,8 @@ function App() {
               {/* Slider 5: Negative drift */}
               <div className="space-y-2">
                 <Label className="flex items-center">
-                  Annualized Negative Drift
-                  <InfoTooltip align="left" text="Simulates a sustained Bear Market. A value of -0.20 forces the engine to trend downward 20% annualized." />
+                  Annualised Negative Drift
+                  <InfoTooltip align="left" text="Simulates a sustained Bear Market. A value of -0.20 forces the engine to trend downward 20% annualised." />
                 </Label>
                 <div className="flex items-center gap-3">
                   <input type="range" min="-1.0" max="0.5" step="0.05" value={meanShock} onChange={(e) => setMeanShock(e.target.value)} className="flex-1 accent-red-600 cursor-pointer" />
@@ -429,7 +440,7 @@ function App() {
                     <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
                       <p className="text-xs font-semibold text-slate-500 uppercase flex items-center">
                         Sortino Ratio
-                        <InfoTooltip align="right" text="Measures risk-adjusted return. Similar to the Sharpe Ratio, but only penalizes harmful 'downside' volatility. Higher is better." />
+                        <InfoTooltip align="right" text="Measures risk-adjusted return. Similar to the Sharpe Ratio, but only penalises harmful 'downside' volatility. Higher is better." />
                       </p>
                       <p className="text-xl font-bold text-slate-900">{riskMetrics.normalSortino.toFixed(2)}</p>
                     </div>
