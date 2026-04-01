@@ -10,7 +10,7 @@ import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as
 // Color palette for dynamic historical lines
 const LINE_COLORS = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#ec4899', '#f97316'];
 
-// --- UPGRADED TOOLTIP COMPONENT (Adaptive Width & Safe Positioning) ---
+// Tooltip component (Adaptive Width & Safe Positioning)
 const InfoTooltip = ({ text, align = "center", side = "top" }) => {
   let alignClass = "left-1/2 -translate-x-1/2";
   let arrowClass = "left-1/2 -translate-x-1/2";
@@ -30,7 +30,6 @@ const InfoTooltip = ({ text, align = "center", side = "top" }) => {
   return (
     <span className="group relative inline-flex items-center justify-center ml-1.5 cursor-help z-50">
       <Info className="w-3.5 h-3.5 text-slate-400 hover:text-blue-500 transition-colors" />
-      {/* ADDED: normal-case, font-normal, and tracking-normal to prevent inheriting parent styles */}
       <span className={`absolute ${sideClass} ${alignClass} hidden group-hover:block w-max max-w-[220px] sm:max-w-[260px] p-2.5 bg-slate-800 text-white text-xs rounded-md shadow-xl text-left font-normal normal-case tracking-normal leading-relaxed pointer-events-none`}>
         {text}
         <span className={`absolute ${arrowSideClass} ${arrowClass} border-4 border-transparent`}></span>
@@ -47,10 +46,10 @@ function App() {
   const [tickers, setTickers] = useState("NVDA, GOOG, AVGO");
   const [weights, setWeights] = useState("0.66, 0.26, 0.08");
   const [baseCapital, setBaseCapital] = useState(23270);
-  const [startDate, setStartDate] = useState("2024-03-31");
+  const [startDate, setStartDate] = useState("2025-03-31");
   const [endDate, setEndDate] = useState("2026-03-31");
   
-  // SLIDER STATES
+  // Slider states
   const [dayHorizon, setDayHorizon] = useState(60);
   const [simulations, setSimulations] = useState(2000);
   const [shockVol, setShockVol] = useState(1.15);
@@ -226,13 +225,13 @@ function App() {
         </div>
         <div>
           <h1 className="text-2xl font-bold text-slate-900 tracking-tight">IPRAE Risk Engine</h1>
-          <p className="text-slate-500 text-sm">Institutional Portfolio Stress Testing</p>
+          <p className="text-slate-500 text-sm">Investment Portfolio Stress Testing</p>
         </div>
       </header>
       
       <main className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        {/* INPUT FORM */}
+        {/* Input form */}
         <div className="space-y-6">
           <Card>
             <CardHeader className="pb-4">
@@ -279,7 +278,7 @@ function App() {
                 </div>
               </div>
 
-              {/* SLIDER 1: HORIZON */}
+              {/* Slider 1: Time horizon */}
               <div className="space-y-2 pt-2">
                 <Label className="flex items-center">
                   Forecast Horizon (Days)
@@ -291,7 +290,7 @@ function App() {
                 </div>
               </div>
 
-              {/* SLIDER 2: SIMULATIONS */}
+              {/* Slider 2: Simulations */}
               <div className="space-y-2">
                 <Label className="flex items-center">
                   Monte Carlo Paths
@@ -321,7 +320,7 @@ function App() {
             </CardHeader>
             <CardContent className="space-y-4">
               
-              {/* SLIDER 3: VOLATILITY MULTIPLIER */}
+              {/* Slider 3: Volatility multiplier */}
               <div className="space-y-2">
                 <Label className="flex items-center">
                   Volatility Multiplier (x)
@@ -333,7 +332,7 @@ function App() {
                 </div>
               </div>
 
-              {/* SLIDER 4: MARKET GAP */}
+              {/* Slider 4: Market gap */}
               <div className="space-y-2">
                 <Label className="flex items-center">
                   Overnight Gap Down (%)
@@ -345,7 +344,7 @@ function App() {
                 </div>
               </div>
 
-              {/* SLIDER 5: NEGATIVE DRIFT */}
+              {/* Slider 5: Negative drift */}
               <div className="space-y-2">
                 <Label className="flex items-center">
                   Annualized Negative Drift
@@ -367,7 +366,7 @@ function App() {
           </Card>
         </div>
 
-        {/* OUTPUT & CHARTS */}
+        {/* Outputs & charts */}
         <Card className="lg:col-span-2 flex flex-col">
           <CardHeader>
             <CardTitle>Simulation Results</CardTitle>
@@ -410,7 +409,7 @@ function App() {
                   <TabsTrigger value="data"><Database className="w-4 h-4 mr-2 hidden sm:inline-block" /> Data</TabsTrigger>
                 </TabsList>
 
-                {/* TAB 1: NORMAL MARKET */}
+                {/* Tab 1: Normal market */}
                 <TabsContent value="normal" className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
@@ -451,7 +450,7 @@ function App() {
                   </div>
                 </TabsContent>
 
-                {/* TAB 2: STRESS TEST */}
+                {/* Tab 2: Stress test */}
                 <TabsContent value="stress" className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="bg-red-50 p-4 rounded-lg border border-red-200">
@@ -501,7 +500,7 @@ function App() {
                   </div>
                 </TabsContent>
 
-                {/* TAB 3: RISK ATTRIBUTION */}
+                {/* Tab 3: Risk attribution */}
                 <TabsContent value="attribution" className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
@@ -593,7 +592,7 @@ function App() {
                   </div>
                 </TabsContent>
 
-                {/* TAB 4: HISTORICAL TRENDS */}
+                {/* Tab 4: Historical trends */}
                 <TabsContent value="history" className="space-y-6">
                   <div className="w-full h-[450px]">
                     <h3 className="text-sm font-semibold text-slate-700 mb-4">Historical Asset Performance (Base 100)</h3>
@@ -632,7 +631,7 @@ function App() {
                   </div>
                 </TabsContent>
 
-                {/* TAB 5: OPTIMAL HEDGING */}
+                {/* Tab 5: Optimal hedging */}
                 <TabsContent value="hedging" className="space-y-6">
                   <div className="bg-amber-50 p-6 rounded-lg border border-amber-200 flex flex-col items-center justify-center text-center space-y-4">
                     <ShieldPlus className="w-12 h-12 text-amber-500" />
@@ -652,7 +651,7 @@ function App() {
                   </div>
                 </TabsContent>
 
-                {/* TAB 6: RAW MARKET DATA */}
+                {/* Tab 6: Raw market data */}
                 <TabsContent value="data" className="space-y-6">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-sm font-semibold text-slate-700">Raw Historical Prices</h3>

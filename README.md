@@ -1,4 +1,4 @@
-# 📈 IPRAE (V2 Dashboard)
+# IPRAE (V2 Dashboard)
 
 A modern, responsive React web application for investment portfolio stress testing and risk analysis. This is the frontend dashboard (V2) for the IPRAE Risk Engine, completely re-engineered from the original Streamlit prototype to deliver lightning-fast performance, interactive charts, and a polished user experience.
 
