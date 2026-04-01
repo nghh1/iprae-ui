@@ -272,20 +272,22 @@ function App() {
                 <Input type="number" value={baseCapital} onChange={(e) => setBaseCapital(e.target.value)} />
               </div>
 
-              <div className="grid grid-cols-2 gap-2 sm:gap-4">
-                <div className="space-y-2">
-                  <Label className="flex items-center text-xs sm:text-sm tracking-tight">
+              <div className="flex flex-col sm:flex-row gap-4">
+                {/* Max-width prevents it from getting awkwardly long on phones */}
+                <div className="space-y-2 w-full max-w-[200px] sm:max-w-none sm:flex-1">
+                  <Label className="flex items-center text-sm tracking-tight">
                     Start Date
                     <InfoTooltip align="left" text="The beginning of the historical lookback period used to calculate volatility and drift." />
                   </Label>
-                  <Input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} className="px-2 sm:px-3 text-xs sm:text-sm" />
+                  <Input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                 </div>
-                <div className="space-y-2">
-                  <Label className="flex items-center text-xs sm:text-sm tracking-tight">
+                
+                <div className="space-y-2 w-full max-w-[200px] sm:max-w-none sm:flex-1">
+                  <Label className="flex items-center text-sm tracking-tight">
                     End Date
                     <InfoTooltip align="right" text="The end of the historical lookback period." />
                   </Label>
-                  <Input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} className="px-2 sm:px-3 text-xs sm:text-sm" />
+                  <Input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
                 </div>
               </div>
 
