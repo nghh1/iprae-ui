@@ -8,7 +8,7 @@ A modern, responsive React web application for investment portfolio stress testi
 * **Severe Stress Testing:** Model market crash events by applying custom volatility multipliers, overnight market gaps, and sustained negative drifts.
 * **Risk Attribution:** Visualise how individual assets contribute to overall portfolio volatility using interactive Bar Charts and Heatmaps.
 * **Optimal Hedging Strategy:** Automatically calculates the risk gap and recommends the exact percentage of capital to reallocate to defensive assets.
-* **Raw Data Export:** Clean, scrollable data tables of base-100 normalized historical prices with CSV download.
+* **Raw Data Export:** Clean, scrollable data tables of historical prices with CSV download.
 * **Fully Responsive:** Beautifully adapts to desktops, tablets, and mobile devices using a fluid layout and adaptive UI components.
 
 ## Tech Stack
