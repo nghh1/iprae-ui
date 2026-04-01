@@ -285,7 +285,7 @@ function App() {
                 <div className="space-y-2 w-full max-w-[200px] sm:max-w-none sm:flex-1">
                   <Label className="flex items-center text-sm tracking-tight">
                     End Date
-                    <InfoTooltip align="right" text="The end of the historical lookback period." />
+                    <InfoTooltip align="left" text="The end of the historical lookback." />
                   </Label>
                   <Input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
                 </div>
@@ -295,7 +295,7 @@ function App() {
               <div className="space-y-2 pt-2">
                 <Label className="flex items-center">
                   Forecast Horizon (Days)
-                  <InfoTooltip align="left" text="Number of trading days to project into the future (e.g., 60 days is roughly 3 months)." />
+                  <InfoTooltip align="top" text="Number of trading days to project into the future (e.g., 60 days is roughly 3 months)." />
                 </Label>
                 <div className="flex items-center gap-3">
                   <input type="range" min="5" max="252" step="1" value={dayHorizon} onChange={(e) => setDayHorizon(e.target.value)} className="flex-1 accent-blue-600 cursor-pointer" />
@@ -319,7 +319,7 @@ function App() {
                 <input type="checkbox" id="rebalance" checked={rebalance} onChange={(e) => setRebalance(e.target.checked)} className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
                 <Label htmlFor="rebalance" className="cursor-pointer flex items-center">
                   Enable Daily Rebalancing
-                  <InfoTooltip align="left" text="If checked, the engine forces the portfolio back to target weights every day. If unchecked, winners will drift and overweight naturally." />
+                  <InfoTooltip align="top" text="If checked, the engine forces the portfolio back to target weights every day. If unchecked, winners will drift and overweight naturally." />
                 </Label>
               </div>
             </CardContent>
@@ -337,7 +337,7 @@ function App() {
               <div className="space-y-2">
                 <Label className="flex items-center">
                   Volatility Multiplier (x)
-                  <InfoTooltip align="left" side="bottom" text="Scales the volatility. The market will swing as violently as it did in the past." />
+                  <InfoTooltip align="top" side="bottom" text="Scales the volatility. The market will swing as violently as it did in the past." />
                 </Label>
                 <div className="flex items-center gap-3">
                   <input type="range" min="1.0" max="5.0" step="0.1" value={shockVol} onChange={(e) => setShockVol(e.target.value)} className="flex-1 accent-red-600 cursor-pointer" />
@@ -349,7 +349,7 @@ function App() {
               <div className="space-y-2">
                 <Label className="flex items-center">
                   Overnight Gap Down (%)
-                  <InfoTooltip align="left" text="Simulates an instant market crash on Day 1 of the simulation before the random paths begin." />
+                  <InfoTooltip align="top" text="Simulates an instant market crash on Day 1 of the simulation before the random paths begin." />
                 </Label>
                 <div className="flex items-center gap-3">
                   <input type="range" min="-20.0" max="0.0" step="0.5" value={mktGap} onChange={(e) => setMktGap(e.target.value)} className="flex-1 accent-red-600 cursor-pointer" />
@@ -361,7 +361,7 @@ function App() {
               <div className="space-y-2">
                 <Label className="flex items-center">
                   Annualised Negative Drift
-                  <InfoTooltip align="left" text="Simulates a sustained Bear Market. A value of -0.20 forces the engine to trend downward 20% annualised." />
+                  <InfoTooltip align="top" text="Simulates a sustained Bear Market. A value of -0.20 forces the engine to trend downward 20% annualised." />
                 </Label>
                 <div className="flex items-center gap-3">
                   <input type="range" min="-1.0" max="0.5" step="0.05" value={meanShock} onChange={(e) => setMeanShock(e.target.value)} className="flex-1 accent-red-600 cursor-pointer" />
@@ -442,7 +442,7 @@ function App() {
                     <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
                       <p className="text-xs font-semibold text-slate-500 uppercase flex items-center">
                         Sortino Ratio
-                        <InfoTooltip align="right" text="Measures risk-adjusted return. Similar to the Sharpe Ratio, but only penalises harmful 'downside' volatility. Higher is better." />
+                        <InfoTooltip align="center" text="Measures risk-adjusted return. Similar to the Sharpe Ratio, but only penalises harmful 'downside' volatility. Higher is better." />
                       </p>
                       <p className="text-xl font-bold text-slate-900">{riskMetrics.normalSortino.toFixed(2)}</p>
                     </div>
@@ -469,7 +469,7 @@ function App() {
                     <div className="bg-red-50 p-4 rounded-lg border border-red-200">
                       <p className="text-xs font-semibold text-red-700 uppercase flex items-center">
                         Stress VaR
-                        <InfoTooltip align="left" text="The new Value at Risk calculated under severe crash parameters." />
+                        <InfoTooltip align="center" text="The new Value at Risk calculated under severe crash parameters." />
                       </p>
                       <p className="text-xl font-bold text-red-900">${riskMetrics.stressVaR.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
                       <p className="text-xs text-red-600 mt-1 font-medium">
@@ -489,7 +489,7 @@ function App() {
                     <div className="bg-red-50 p-4 rounded-lg border border-red-200">
                       <p className="text-xs font-semibold text-red-700 uppercase flex items-center">
                         Stress Sortino
-                        <InfoTooltip align="right" text="The risk-adjusted return ratio completely devastated by the simulated bear market drift." />
+                        <InfoTooltip align="center" text="The risk-adjusted return ratio completely devastated by the simulated bear market drift." />
                       </p>
                       <p className="text-xl font-bold text-red-900">{riskMetrics.stressSortino.toFixed(2)}</p>
                       <p className="text-xs text-red-600 mt-1 font-medium">
@@ -519,7 +519,7 @@ function App() {
                     <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
                       <p className="text-xs font-semibold text-slate-500 uppercase flex items-center">
                         Diversification Ratio
-                        <InfoTooltip align="left" text="Measures how well assets offset each other. A ratio of 1.0 means no diversification. >1.5 indicates excellent uncorrelated hedging." />
+                        <InfoTooltip align="center" text="Measures how well assets offset each other. A ratio of 1.0 means no diversification. >1.5 indicates excellent uncorrelated hedging." />
                       </p>
                       <p className="text-2xl font-bold text-slate-900">{results.diversification_ratio?.toFixed(2) || "N/A"}</p>
                     </div>
@@ -543,7 +543,7 @@ function App() {
                     <div className="md:col-span-2 h-[250px]">
                       <h3 className="text-sm font-semibold text-slate-700 mb-4 flex items-center">
                         Allocation vs Risk Contribution (%)
-                        <InfoTooltip align="left" text="Just because an asset makes up 10% of your capital does not mean it is 10% of your risk. Highly volatile assets contribute disproportionately more risk." />
+                        <InfoTooltip align="right" text="Just because an asset makes up 10% of your capital does not mean it is 10% of your risk. Highly volatile assets contribute disproportionately more risk." />
                       </h3>
                       <ResponsiveContainer width="99%" height="100%" minWidth={1} minHeight={1}>
                         <BarChart data={riskAttributionData} margin={{ top: 5, right: 30, left: -20, bottom: 5 }}>
@@ -570,7 +570,7 @@ function App() {
                   <div className="pt-4 border-t">
                     <h3 className="text-sm font-semibold text-slate-700 mb-4 flex items-center">
                       Asset Correlation Matrix
-                      <InfoTooltip align="left" text="1.0 means assets move in perfect sync. 0.0 means no relationship. Negative numbers mean they move in opposite directions (a perfect hedge)." />
+                      <InfoTooltip align="center" text="1.0 means assets move in perfect sync. 0.0 means no relationship. Negative numbers mean they move in opposite directions (a perfect hedge)." />
                     </h3>
                     <div className="overflow-x-auto pb-4">
                       <div className="inline-grid gap-1 justify-start" style={{ gridTemplateColumns: `auto repeat(${riskAttributionData.length}, 60px)` }}>
@@ -651,7 +651,7 @@ function App() {
                     <div>
                       <h3 className="text-lg font-bold text-amber-900 mb-2 flex items-center justify-center">
                         Optimal Hedge Suggestion
-                        <InfoTooltip align="center" text="Calculates the absolute difference between Normal VaR and Stress VaR to recommend a defensive cash/bond position." />
+                        <InfoTooltip align="right" text="Calculates the absolute difference between Normal VaR and Stress VaR to recommend a defensive cash/bond position." />
                       </h3>
                       <p className="text-amber-800 max-w-xl mx-auto leading-relaxed">
                         To neutralise the unnecessary risk identified in the Stress Test, consider reallocating 
