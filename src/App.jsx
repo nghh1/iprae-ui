@@ -40,7 +40,7 @@ const InfoTooltip = ({ text, align = "center", side = "top" }) => {
     >
       <Info className={`w-3.5 h-3.5 transition-colors ${isOpen ? 'text-blue-500' : 'text-slate-400'}`} />
       {isOpen && (
-        <span className={`absolute ${sideClass} ${alignClass} w-max max-w-[220px] sm:max-w-[260px] p-2.5 bg-slate-900 text-white text-xs rounded-md shadow-2xl text-left font-normal normal-case tracking-normal leading-relaxed pointer-events-none`}>
+        <span className={`absolute ${sideClass} ${alignClass} w-[200px] max-w-[220px] sm:max-w-[260px] p-2.5 bg-slate-900 text-white text-xs rounded-md shadow-2xl text-left font-normal normal-case tracking-normal leading-relaxed pointer-events-none`}>
           {text}
           <span className={`absolute ${arrowSideClass} ${arrowClass} border-4 border-transparent`}></span>
         </span>
