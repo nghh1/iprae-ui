@@ -204,7 +204,7 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                       <p className="text-xl font-bold text-slate-900">${riskMetrics.normalCVaR.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
                     </div>
                     <div className="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                      <p className="text-xs font-semibold text-slate-500 uppercase flex items-center">Sortino Ratio <InfoTooltip align="left" text="Risk-adjusted return focusing on downside volatility." /></p>
+                      <p className="text-xs font-semibold text-slate-500 uppercase flex items-center">Sortino Ratio <InfoTooltip align="center" text="Risk-adjusted return focusing on downside volatility." /></p>
                       <p className="text-xl font-bold text-slate-900">{riskMetrics.normalSortino.toFixed(2)}</p>
                     </div>
                   </div>
@@ -255,7 +255,7 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                     {/* Stress Sortino */}
                     <div className="bg-red-50 p-4 rounded-lg border border-red-200">
                       <p className="text-xs font-semibold text-red-700 uppercase flex items-center">
-                        Stress Sortino <InfoTooltip align="left" text="Risk-adjusted return during a bear market drift." />
+                        Stress Sortino <InfoTooltip align="center" text="Risk-adjusted return during a bear market drift." />
                       </p>
                       <p className="text-xl font-bold text-red-900">{riskMetrics.stressSortino.toFixed(2)}</p>
                       {/* RESTORED DIFFERENCE COMPARISON */}

@@ -117,7 +117,7 @@ export const ConfigurationPanel = ({ state, setters, runSimulation, loading }) =
             <div className="space-y-2 w-full max-w-[200px] sm:max-w-none sm:flex-1">
               <Label className="flex items-center text-sm tracking-tight">
                 End Date
-                <InfoTooltip align="center" text="The end of the historical lookback period." />
+                <InfoTooltip align="left" text="The end of the historical lookback period." />
               </Label>
               <Input type="date" value={state.endDate} onChange={(e) => setters.setEndDate(e.target.value)} />
             </div>
