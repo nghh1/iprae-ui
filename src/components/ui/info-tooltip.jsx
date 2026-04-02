@@ -17,7 +17,7 @@ export const InfoTooltip = ({ text, align = "center", side = "top" }) => {
 
   const isTop = side === "top";
   const sideClass = isTop ? "bottom-full mb-2" : "top-full mt-2";
-  const arrowSideClass = isTop ? "top-full border-t-slate-800" : "bottom-full border-b-slate-800";
+  const arrowSideClass = isTop ? "top-full border-t-slate-900" : "bottom-full border-b-slate-900";
 
   return (
     <span 
@@ -28,10 +28,10 @@ export const InfoTooltip = ({ text, align = "center", side = "top" }) => {
       onClick={() => setIsOpen(!isOpen)}
       onBlur={() => setIsOpen(false)}
     >
-      <Info className={`w-3.5 h-3.5 transition-colors ${isOpen ? 'text-blue-500' : 'text-slate-400'}`} />
+      <Info className={`w-3.5 h-3.5 transition-colors ${isOpen ? 'text-blue-600' : 'text-slate-500'}`} />
       
       {isOpen && (
-        <span className={`absolute ${sideClass} ${alignClass} w-max max-w-[220px] sm:max-w-[260px] p-2.5 bg-slate-800 text-white text-xs rounded-md shadow-xl text-left font-normal normal-case tracking-normal leading-relaxed pointer-events-none`}>
+        <span className={`absolute ${sideClass} ${alignClass} w-[200px] max-w-[220px] sm:max-w-[260px] p-2.5 bg-slate-800 text-white text-xs rounded-md shadow-xl text-left font-normal normal-case tracking-normal leading-relaxed pointer-events-none`}>
           {text}
           <span className={`absolute ${arrowSideClass} ${arrowClass} border-4 border-transparent`}></span>
         </span>

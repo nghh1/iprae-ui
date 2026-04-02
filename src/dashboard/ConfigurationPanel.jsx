@@ -38,7 +38,7 @@ export const ConfigurationPanel = ({ state, setters, runSimulation, loading }) =
           <div className="space-y-3">
             <Label className="flex items-center">
               Asset Allocation
-              <InfoTooltip align="left" side="bottom" text="Add the stock tickers in your portfolio and their target weights. Total must equal 100%." />
+              <InfoTooltip align="center" side="bottom" text="Add the stock tickers in your portfolio and their target weights. Total must equal 100%." />
             </Label>
             
             <div className="space-y-2">
@@ -117,7 +117,7 @@ export const ConfigurationPanel = ({ state, setters, runSimulation, loading }) =
             <div className="space-y-2 w-full max-w-[200px] sm:max-w-none sm:flex-1">
               <Label className="flex items-center text-sm tracking-tight">
                 End Date
-                <InfoTooltip align="right" text="The end of the historical lookback period." />
+                <InfoTooltip align="center" text="The end of the historical lookback period." />
               </Label>
               <Input type="date" value={state.endDate} onChange={(e) => setters.setEndDate(e.target.value)} />
             </div>
@@ -126,7 +126,7 @@ export const ConfigurationPanel = ({ state, setters, runSimulation, loading }) =
           <div className="space-y-2 pt-2">
             <Label className="flex items-center">
               Forecast Horizon (Days)
-              <InfoTooltip align="left" text="Number of trading days to project into the future (e.g., 60 days is roughly 3 months)." />
+              <InfoTooltip align="center" text="Number of trading days to project into the future (e.g., 60 days is roughly 3 months)." />
             </Label>
             <div className="flex items-center gap-3">
               <input type="range" min="5" max="252" step="1" value={state.dayHorizon} onChange={(e) => setters.setDayHorizon(e.target.value)} className="flex-1 accent-blue-600 cursor-pointer" />
@@ -149,7 +149,7 @@ export const ConfigurationPanel = ({ state, setters, runSimulation, loading }) =
             <input type="checkbox" id="rebalance" checked={state.rebalance} onChange={(e) => setters.setRebalance(e.target.checked)} className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
             <Label htmlFor="rebalance" className="cursor-pointer flex items-center">
               Enable Daily Rebalancing
-              <InfoTooltip align="left" text="If checked, the engine forces the portfolio back to target weights every day. If unchecked, winners will drift and overweight naturally." />
+              <InfoTooltip align="center" text="If checked, the engine forces the portfolio back to target weights every day. If unchecked, winners will drift and overweight naturally." />
             </Label>
           </div>
         </CardContent>
@@ -165,7 +165,7 @@ export const ConfigurationPanel = ({ state, setters, runSimulation, loading }) =
           <div className="space-y-2">
             <Label className="flex items-center">
               Volatility Multiplier (x)
-              <InfoTooltip align="left" side="bottom" text="Scales the volatility. The market will swing as violently as it did in the past." />
+              <InfoTooltip align="center" side="bottom" text="Scales the volatility. The market will swing as violently as it did in the past." />
             </Label>
             <div className="flex items-center gap-3">
               <input type="range" min="1.0" max="5.0" step="0.1" value={state.shockVol} onChange={(e) => setters.setShockVol(e.target.value)} className="flex-1 accent-red-600 cursor-pointer" />
@@ -176,7 +176,7 @@ export const ConfigurationPanel = ({ state, setters, runSimulation, loading }) =
           <div className="space-y-2">
             <Label className="flex items-center">
               Overnight Gap Down (%)
-              <InfoTooltip align="left" text="Simulates an instant market crash on Day 1 of the simulation before the random paths begin." />
+              <InfoTooltip align="center" text="Simulates an instant market crash on Day 1 of the simulation before the random paths begin." />
             </Label>
             <div className="flex items-center gap-3">
               <input type="range" min="-20.0" max="0.0" step="0.5" value={state.mktGap} onChange={(e) => setters.setMktGap(e.target.value)} className="flex-1 accent-red-600 cursor-pointer" />
@@ -187,7 +187,7 @@ export const ConfigurationPanel = ({ state, setters, runSimulation, loading }) =
           <div className="space-y-2">
             <Label className="flex items-center">
               Annualised Negative Drift
-              <InfoTooltip align="left" text="Simulates a sustained Bear Market. A value of -0.20 forces the engine to trend downward 20% annualised." />
+              <InfoTooltip align="center" text="Simulates a sustained Bear Market. A value of -0.20 forces the engine to trend downward 20% annualised." />
             </Label>
             <div className="flex items-center gap-3">
               <input type="range" min="-1.0" max="0.5" step="0.05" value={state.meanShock} onChange={(e) => setters.setMeanShock(e.target.value)} className="flex-1 accent-red-600 cursor-pointer" />
