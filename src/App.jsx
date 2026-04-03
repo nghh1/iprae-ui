@@ -59,7 +59,6 @@ function App() {
     }
   };
 
-  // Convert objects back to strings safely for the ResultsPanel to consume without breaking existing chart logic
   const legacyTickers = assets.map(a => a.ticker).join(', ');
   const legacyWeights = assets.map(a => (a.weight / 100).toString()).join(', ');
 

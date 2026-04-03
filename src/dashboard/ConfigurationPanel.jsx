@@ -7,14 +7,12 @@ import { InfoTooltip } from "@/components/ui/info-tooltip";
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const ConfigurationPanel = ({ state, setters, runSimulation, loading }) => {
-  
-  // --- DYNAMIC ASSET HANDLERS ---
   const handleAddAsset = () => {
     setters.setAssets([...state.assets, { id: Date.now(), ticker: "", weight: 0 }]);
   };
 
   const handleRemoveAsset = (id) => {
-    if (state.assets.length <= 1) return; // Prevent deleting the last row
+    if (state.assets.length <= 1) return; 
     setters.setAssets(state.assets.filter(a => a.id !== id));
   };
 
@@ -22,7 +20,6 @@ export const ConfigurationPanel = ({ state, setters, runSimulation, loading }) =
     setters.setAssets(state.assets.map(a => a.id === id ? { ...a, [field]: value } : a));
   };
 
-  // Calculate total weight to validate (must equal exactly 100%)
   const totalWeight = state.assets.reduce((sum, asset) => sum + (parseFloat(asset.weight) || 0), 0);
   const isWeightValid = Math.abs(totalWeight - 100) < 0.01;
 
@@ -34,7 +31,6 @@ export const ConfigurationPanel = ({ state, setters, runSimulation, loading }) =
         </CardHeader>
         <CardContent className="space-y-6">
           
-          {/* --- NEW DYNAMIC ASSET UI --- */}
           <div className="space-y-3">
             <Label className="flex items-center">
               Asset Allocation
@@ -45,7 +41,7 @@ export const ConfigurationPanel = ({ state, setters, runSimulation, loading }) =
               <div className="flex gap-2 px-1">
                 <span className="text-xs font-semibold text-slate-500 uppercase flex-1">Ticker</span>
                 <span className="text-xs font-semibold text-slate-500 uppercase w-24 text-center">Weight (%)</span>
-                <span className="w-8"></span> {/* Empty space for trash icon alignment */}
+                <span className="w-8"></span> 
               </div>
               
               <AnimatePresence initial={false}>
@@ -190,13 +186,12 @@ export const ConfigurationPanel = ({ state, setters, runSimulation, loading }) =
               <InfoTooltip align="center" text="Simulates a sustained Bear Market. A value of -0.20 forces the engine to trend downward 20% annualised." />
             </Label>
             <div className="flex items-center gap-3">
-              <input type="range" min="-1.0" max="0.5" step="0.05" value={state.meanShock} onChange={(e) => setters.setMeanShock(e.target.value)} className="flex-1 accent-red-600 cursor-pointer" />
+              <input type="range" min="-1.0" max="0.0" step="0.05" value={state.meanShock} onChange={(e) => setters.setMeanShock(e.target.value)} className="flex-1 accent-red-600 cursor-pointer" />
               <Input type="number" step="0.05" className="w-20 text-right h-8" value={state.meanShock} onChange={(e) => setters.setMeanShock(e.target.value)} />
             </div>
           </div>
 
           <div className="pt-2">
-            {/* Wrap the button in a motion.div for a satisfying click effect */}
             <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.97 }}>
               <Button className="w-full" onClick={runSimulation} disabled={loading || !isWeightValid}>
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

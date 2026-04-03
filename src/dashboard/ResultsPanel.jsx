@@ -124,7 +124,7 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
       </CardHeader>
       
       <CardContent className="flex-1 flex flex-col border-t p-6 relative">
-        {/* --- 2. ADD ANIMATE PRESENCE FOR SMOOTH MOUNTING/UNMOUNTING --- */}
+        {/* ADD ANIMATE PRESENCE FOR SMOOTH MOUNTING/UNMOUNTING */}
         <AnimatePresence mode="wait">
           
           {/* INITIAL STATE */}
@@ -140,7 +140,7 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
             </motion.div>
           )}
           
-          {/* LOADING STATE (Skeleton-style pulse) */}
+          {/* LOADING STATE */}
           {loading && (
             <motion.div 
               key="loading"
@@ -180,7 +180,6 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
               className="w-full"
             >
               <Tabs defaultValue="normal" className="w-full">
-                {/* Keep your existing TabsList and TabsContents exactly as they were here */}
                 <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 p-1 mb-6 bg-slate-200/50 rounded-lg" style={{ height: 'auto' }}>
                   <TabsTrigger value="normal"><ChartSpline className="w-4 h-4 mr-2 hidden sm:inline-block" /> Normal</TabsTrigger>
                   <TabsTrigger value="stress" className="data-[state=active]:bg-red-50 data-[state=active]:text-red-700">
@@ -234,7 +233,6 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                         Stress VaR <InfoTooltip align="left" text="Value at Risk under severe crash parameters." />
                       </p>
                       <p className="text-xl font-bold text-red-900">${riskMetrics.stressVaR.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
-                      {/* RESTORED PERCENTAGE COMPARISON */}
                       <p className="text-xs text-red-600 mt-1 font-medium">
                         {riskMetrics.normalVaR > 0 ? `${(((riskMetrics.stressVaR / riskMetrics.normalVaR) - 1) * 100 > 0 ? '+' : '')}${(((riskMetrics.stressVaR / riskMetrics.normalVaR) - 1) * 100).toFixed(1)}% vs Normal` : "New Risk"}
                       </p>
@@ -246,7 +244,6 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                         Stress CVaR <InfoTooltip align="center" text="Average expected loss during worst-case crashes." />
                       </p>
                       <p className="text-xl font-bold text-red-900">${riskMetrics.stressCVaR.toLocaleString(undefined, {maximumFractionDigits: 0})}</p>
-                      {/* RESTORED PERCENTAGE COMPARISON */}
                       <p className="text-xs text-red-600 mt-1 font-medium">
                         {riskMetrics.normalCVaR > 0 ? `${(((riskMetrics.stressCVaR / riskMetrics.normalCVaR) - 1) * 100 > 0 ? '+' : '')}${(((riskMetrics.stressCVaR / riskMetrics.normalCVaR) - 1) * 100).toFixed(1)}% vs Normal` : "New Risk"}
                       </p>
@@ -258,7 +255,6 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                         Stress Sortino <InfoTooltip align="center" text="Risk-adjusted return during a bear market drift." />
                       </p>
                       <p className="text-xl font-bold text-red-900">{riskMetrics.stressSortino.toFixed(2)}</p>
-                      {/* RESTORED DIFFERENCE COMPARISON */}
                       <p className="text-xs text-red-600 mt-1 font-medium">
                         {(riskMetrics.stressSortino - riskMetrics.normalSortino).toFixed(2)} difference
                       </p>
@@ -317,9 +313,7 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                     {/* Right Side: Correlation Matrix */}
                     <div className="pt-4 md:pt-0 border-t md:border-t-0 flex flex-col h-[250px]">
                       <h3 className="text-sm font-semibold text-slate-700 mb-4 flex items-center">Correlation Matrix</h3>
-                      {/* Added flex-1 and justify-center to vertically align with the 250px bar chart */}
-                      <div className="overflow-x-auto pb-4 justify-center">
-                        {/* Increased box size to 64px and gap to gap-2 */}
+                      <div className="overflow-x-auto pb-4">
                         <div className="inline-grid gap justify-start" style={{ gridTemplateColumns: `auto repeat(${riskAttributionData.length}, 56px)` }}>
                           <div></div>
                           {riskAttributionData.map((asset, idx) => (
