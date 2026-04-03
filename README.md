@@ -20,6 +20,7 @@ This UI was built using modern, industry-standard web technologies:
 * **Components:** shadcn/ui & Base UI (Accessible, headless components)
 * **Charts:** Recharts
 * **Icons:** Lucide React
+* **Animation:** Motion
 * **Backend:** Communicates with a Python/FastAPI quantitative engine.
 
 ## Live Deployment
