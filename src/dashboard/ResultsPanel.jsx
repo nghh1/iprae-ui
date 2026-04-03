@@ -313,7 +313,13 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                     {/* Right Side: Correlation Matrix */}
                     <div className="pt-4 md:pt-0 border-t md:border-t-0 flex flex-col h-[250px]">
                       <h3 className="text-sm font-semibold text-slate-700 mb-4 flex items-center">Correlation Matrix</h3>
+<<<<<<< HEAD
                       <div className="overflow-x-auto pb-4">
+=======
+                      {/* Added flex-1 and justify-center to vertically align with the 250px bar chart */}
+                      <div className="overflow-x-auto pb-4">
+                        {/* Increased box size to 64px and gap to gap-2 */}
+>>>>>>> 0ba6a40891b94caf5849f63b3ff88838e1be1770
                         <div className="inline-grid gap justify-start" style={{ gridTemplateColumns: `auto repeat(${riskAttributionData.length}, 56px)` }}>
                           <div></div>
                           {riskAttributionData.map((asset, idx) => (
