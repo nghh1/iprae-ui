@@ -1,7 +1,9 @@
-import { useMemo } from 'react';
-import { Loader2, AlertTriangle, ChartColumn, ChartSpline, TrendingUp, ShieldPlus, Database, Download } from 'lucide-react';
+import { useMemo, useState, useEffect } from 'react';
+import { Loader2, AlertTriangle, ChartColumn, ChartSpline, TrendingUp, ShieldPlus, Database, Download, Globe, Trophy, Send} from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Legend } from 'recharts';
 import { InfoTooltip } from "@/components/ui/info-tooltip";
@@ -10,7 +12,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 const LINE_COLORS = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#ec4899', '#f97316'];
 
 export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon, tickers, weights }) => {
-    const riskMetrics = useMemo(() => {
+  const [leaderboard, setLeaderboard] = useState([]);
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        const API_URL = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/simulate', '/community/top_portfolios') : "http://127.0.0.1:8000/api/v1/community/top_portfolios";
+        const res = await fetch(API_URL);
+        if (res.ok) setLeaderboard(await res.json());
+      } catch (e) { console.error("Failed to fetch leaderboard"); }
+    };
+    fetchLeaderboard();
+  }, []);
+
+  const riskMetrics = useMemo(() => {
     if (!results) return null;
     const rf = 0.0365; 
     const horizon = parseFloat(dayHorizon);
@@ -188,6 +202,7 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                   <TabsTrigger value="history"><TrendingUp className="w-4 h-4 mr-2 hidden sm:inline-block" /> History</TabsTrigger>
                   <TabsTrigger value="hedging"><ShieldPlus className="w-4 h-4 mr-2 hidden sm:inline-block" /> Hedging</TabsTrigger>
                   <TabsTrigger value="data"><Database className="w-4 h-4 mr-2 hidden sm:inline-block" /> Data</TabsTrigger>
+                  <TabsTrigger value="community" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"><Globe className="w-4 h-4 mr-2 hidden sm:inline-block" /> Community </TabsTrigger>
                 </TabsList>
 
                 {/* TAB 1: NORMAL MARKET */}
@@ -361,7 +376,8 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                     </ResponsiveContainer>
                   </div>
                 </TabsContent>
-
+                
+                {/* TAB 5: OPTIMAL HEDGE SUGGESTION */}
                 <TabsContent value="hedging" className="space-y-6">
                    <div className="bg-amber-50 p-6 rounded-lg border border-amber-200 flex flex-col items-center justify-center text-center space-y-4">
                     <ShieldPlus className="w-12 h-12 text-amber-500" />
@@ -371,7 +387,8 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                     </div>
                   </div>
                 </TabsContent>
-
+                
+                {/* TAB 6: DATA CSV DOWNLOAD */}
                 <TabsContent value="data" className="space-y-6">
                   <div className="flex justify-between items-center mb-4">
                     <h3 className="text-sm font-semibold text-slate-700">Raw Historical Prices</h3>
@@ -388,6 +405,90 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                         ))}
                       </tbody>
                     </table>
+                  </div>
+                </TabsContent>
+
+                {/* TAB 7: COMMUNITY LEADERBOARD */}
+                <TabsContent value="community" className="space-y-6">
+                  {/* Publish Portfolio Section */}
+                  <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
+                    <div className="flex items-center gap-2 mb-4">
+                      <Trophy className="w-6 h-6 text-blue-600" />
+                      <h3 className="text-lg font-bold text-blue-900">Publish to Global Leaderboard</h3>
+                    </div>
+                    <p className="text-sm text-blue-800 mb-4">
+                      Think your portfolio has the best risk-adjusted returns? Save it to the global database to compare with others.
+                    </p>
+                    
+                    <div className="flex gap-4 items-end">
+                      <div className="space-y-2 flex-1">
+                        <Label className="text-blue-900">Your Name / Alias</Label>
+                        <Input id="author_name" placeholder="e.g. Ivan" className="bg-white" />
+                      </div>
+                      <div className="space-y-2 flex-1">
+                        <Label className="text-blue-900">Portfolio Name</Label>
+                        <Input id="port_name" placeholder="e.g. new portfolio" className="bg-white" />
+                      </div>
+                      <Button 
+                        className="bg-blue-600 hover:bg-blue-700 text-white"
+                        onClick={async () => {
+                          const author = document.getElementById('author_name').value || "Anonymous";
+                          const name = document.getElementById('port_name').value || "Unnamed Portfolio";
+                          
+                          try {
+                            const API_URL = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/simulate', '/community/publish') : "http://127.0.0.1:8000/api/v1/community/publish";
+                            await fetch(API_URL, {
+                              method: "POST",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({
+                                author, name, 
+                                tickers: tickers.split(',').map(t => t.trim()),
+                                weights: weights.split(',').map(w => parseFloat(w.trim())),
+                                normal_var: riskMetrics.normalVaR,
+                                stress_var: riskMetrics.stressVaR,
+                                sortino_ratio: riskMetrics.normalSortino
+                              })
+                            });
+                            alert("Successfully published! Refresh to see it on the leaderboard.");
+                          } catch (e) {
+                            alert("Failed to publish portfolio.");
+                          }
+                        }}
+                      >
+                        <Send className="w-4 h-4 mr-2" /> Publish Now
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Leaderboard Table */}
+                  <div>
+                    <h3 className="text-sm font-semibold text-slate-700 mb-4">Top 10 Portfolios (Ranked by Sortino Ratio)</h3>
+                    <div className="border rounded-md overflow-x-auto">
+                      <table className="w-full text-sm text-left">
+                        <thead className="text-xs text-slate-500 uppercase bg-slate-50 border-b">
+                          <tr>
+                            <th className="px-6 py-3">Rank</th>
+                            <th className="px-6 py-3">Author</th>
+                            <th className="px-6 py-3">Portfolio</th>
+                            <th className="px-6 py-3">Assets</th>
+                            <th className="px-6 py-3">Sortino</th>
+                            <th className="px-6 py-3">Stress VaR</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {leaderboard.map((entry, idx) => (
+                            <tr key={entry.id} className="bg-white border-b hover:bg-slate-50 transition-colors">
+                              <td className="px-6 py-4 font-bold text-slate-900">{idx + 1}</td>
+                              <td className="px-6 py-4">{entry.author}</td>
+                              <td className="px-6 py-4 font-medium text-blue-600">{entry.name}</td>
+                              <td className="px-6 py-4 text-xs text-slate-500">{entry.tickers.join(', ')}</td>
+                              <td className="px-6 py-4 font-bold text-green-600">{entry.sortino_ratio.toFixed(2)}</td>
+                              <td className="px-6 py-4 text-red-600">${entry.stress_var.toLocaleString(undefined, {maximumFractionDigits: 0})}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </TabsContent>
               </Tabs>
