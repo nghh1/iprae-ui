@@ -13,14 +13,15 @@ const LINE_COLORS = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06
 
 export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon, tickers, weights }) => {
   const [leaderboard, setLeaderboard] = useState([]);
+  const fetchLeaderboard = async () => {
+    try {
+      const API_URL = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/simulate', '/community/top_portfolios') : "http://127.0.0.1:8000/api/v1/community/top_portfolios";
+      const res = await fetch(API_URL);
+      if (res.ok) setLeaderboard(await res.json());
+    } catch (e) { console.error("Failed to fetch leaderboard"); }
+  };
+
   useEffect(() => {
-    const fetchLeaderboard = async () => {
-      try {
-        const API_URL = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/simulate', '/community/top_portfolios') : "http://127.0.0.1:8000/api/v1/community/top_portfolios";
-        const res = await fetch(API_URL);
-        if (res.ok) setLeaderboard(await res.json());
-      } catch (e) { console.error("Failed to fetch leaderboard"); }
-    };
     fetchLeaderboard();
   }, []);
 
@@ -449,7 +450,10 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                                 sortino_ratio: riskMetrics.normalSortino
                               })
                             });
-                            alert("Successfully published! Refresh to see it on the leaderboard.");
+                            
+                            await fetchLeaderboard();
+                            alert("Successfully published!");
+                            
                           } catch (e) {
                             alert("Failed to publish portfolio.");
                           }
