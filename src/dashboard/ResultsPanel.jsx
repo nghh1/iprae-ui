@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
-import { Loader2, AlertTriangle, ChartColumn, ChartSpline, TrendingUp, ShieldPlus, Database, Download, Globe, Trophy, Send} from 'lucide-react';
+import { Loader2, AlertTriangle, ChartColumn, ChartSpline, TrendingUp, ShieldPlus, Database, Download, Globe, Trophy, Send, Trash2 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -20,7 +20,25 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
       if (res.ok) setLeaderboard(await res.json());
     } catch (e) { console.error("Failed to fetch leaderboard"); }
   };
+  const handleDelete = async (id) => {
+    const isConfirmed = window.confirm("Are you sure you want to delete this portfolio?");
+    if (!isConfirmed) return;
 
+    try {
+      const API_URL = import.meta.env.VITE_API_URL 
+        ? import.meta.env.VITE_API_URL.replace('/simulate', `/community/portfolio/${id}`) 
+        : `http://127.0.0.1:8000/api/v1/community/portfolio/${id}`;
+      
+      const res = await fetch(API_URL, { method: "DELETE" });
+      if (res.ok) {
+        await fetchLeaderboard();
+      } else {
+        alert("Failed to delete record.");
+      }
+    } catch (e) { 
+      console.error("Error deleting record:", e); 
+    }
+  };
   useEffect(() => {
     fetchLeaderboard();
   }, []);
@@ -477,6 +495,7 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                             <th className="px-6 py-3">Assets</th>
                             <th className="px-6 py-3">Sortino</th>
                             <th className="px-6 py-3">Stress VaR</th>
+                            <th className="px-6 py-3"></th>
                           </tr>
                         </thead>
                         <tbody>
@@ -488,6 +507,16 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                               <td className="px-6 py-4 text-xs text-slate-500">{entry.tickers.join(', ')}</td>
                               <td className="px-6 py-4 font-bold text-green-600">{entry.sortino_ratio.toFixed(2)}</td>
                               <td className="px-6 py-4 text-red-600">${entry.stress_var.toLocaleString(undefined, {maximumFractionDigits: 0})}</td>
+                              <td className="px-6 py-4 text-right">
+                                <Button 
+                                  variant="ghost" 
+                                  size="icon" 
+                                  onClick={() => handleDelete(entry.id)}
+                                  className="h-8 w-8 text-slate-400 hover:text-red-500 hover:bg-red-50"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </Button>
+                              </td>
                             </tr>
                           ))}
                         </tbody>
