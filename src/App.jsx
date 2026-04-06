@@ -85,6 +85,13 @@ function App() {
           dayHorizon={dayHorizon} 
           tickers={legacyTickers} 
           weights={legacyWeights} 
+          startDate = {startDate}
+          endDate = {endDate}
+          simulations = {simulations}
+          shockVol = {shockVol}
+          mktGap = {mktGap}
+          meanShock = {meanShock}
+          rebalance = {rebalance}
         />
       </main>
     </div>

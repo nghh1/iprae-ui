@@ -8,10 +8,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Legend } from 'recharts';
 import { InfoTooltip } from "@/components/ui/info-tooltip";
 import { motion, AnimatePresence } from 'framer-motion';
+import { start } from 'node:repl';
 
 const LINE_COLORS = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#ec4899', '#f97316'];
 
-export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon, tickers, weights }) => {
+export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon, tickers, weights, startDate, endDate, simulations, shockVol, mktGap, meanShock, rebalance}) => {
   const [leaderboard, setLeaderboard] = useState([]);
   const fetchLeaderboard = async () => {
     try {
@@ -465,7 +466,16 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                                 weights: weights.split(',').map(w => parseFloat(w.trim())),
                                 normal_var: riskMetrics.normalVaR,
                                 stress_var: riskMetrics.stressVaR,
-                                sortino_ratio: riskMetrics.normalSortino
+                                sortino_ratio: riskMetrics.normalSortino,
+                                base_capital: parseFloat(baseCapital),
+                                start_date: startDate,
+                                end_date: endDate,
+                                day_horizon: parseInt(dayHorizon),
+                                simulations: parseInt(simulations),
+                                shock_volatility: parseFloat(shockVol),
+                                market_gap: parseFloat(mktGap),
+                                mean_shock: parseFloat(meanShock),
+                                rebalance: rebalance
                               })
                             });
                             
@@ -495,6 +505,13 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                             <th className="px-6 py-3">Assets</th>
                             <th className="px-6 py-3">Sortino</th>
                             <th className="px-6 py-3">Stress VaR</th>
+                            <th className="px-6 py-3">Capital</th>
+                            <th className="px-6 py-3">Horizon</th>
+                            <th className="px-6 py-3">Simulations</th>
+                            <th className="px-6 py-3">Shock Vol</th>
+                            <th className="px-6 py-3">Gap</th>
+                            <th className="px-6 py-3">Drift</th>
+                            <th className="px-6 py-3">Rebalance</th>
                             <th className="px-6 py-3"></th>
                           </tr>
                         </thead>
@@ -507,6 +524,13 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                               <td className="px-6 py-4 text-xs text-slate-500">{entry.tickers.join(', ')}</td>
                               <td className="px-6 py-4 font-bold text-green-600">{entry.sortino_ratio.toFixed(2)}</td>
                               <td className="px-6 py-4 text-red-600">${entry.stress_var.toLocaleString(undefined, {maximumFractionDigits: 0})}</td>
+                              <td className="px-6 py-4">${entry.base_capital?.toLocaleString()}</td>
+                              <td className="px-6 py-4">{entry.day_horizon}d</td>
+                              <td className="px-6 py-4">{entry.simulations}</td>
+                              <td className="px-6 py-4">{entry.shock_volatility}x</td>
+                              <td className="px-6 py-4">{entry.market_gap}%</td>
+                              <td className="px-6 py-4">{entry.mean_shock}</td>
+                              <td className="px-6 py-4">{entry.rebalance ? 'Yes' : 'No'}</td>
                               <td className="px-6 py-4 text-right">
                                 <Button 
                                   variant="ghost" 
