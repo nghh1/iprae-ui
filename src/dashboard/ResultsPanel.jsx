@@ -8,7 +8,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, Legend } from 'recharts';
 import { InfoTooltip } from "@/components/ui/info-tooltip";
 import { motion, AnimatePresence } from 'framer-motion';
-import { start } from 'node:repl';
 
 const LINE_COLORS = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6', '#06b6d4', '#ec4899', '#f97316'];
 
@@ -214,7 +213,7 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
               className="w-full"
             >
               <Tabs defaultValue="normal" className="w-full">
-                <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 p-1 mb-6 bg-slate-200/50 rounded-lg" style={{ height: 'auto' }}>
+                <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-1 mb-6 bg-slate-200/50 rounded-lg" style={{ height: 'auto' }}>
                   <TabsTrigger value="normal"><ChartSpline className="w-4 h-4 mr-2 hidden sm:inline-block" /> Normal</TabsTrigger>
                   <TabsTrigger value="stress" className="data-[state=active]:bg-red-50 data-[state=active]:text-red-700">
                     <AlertTriangle className="w-4 h-4 mr-2 hidden sm:inline-block" /> Stress</TabsTrigger>
@@ -440,17 +439,17 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
                       Think your portfolio has the best risk-adjusted returns? Save it to the global database to compare with others.
                     </p>
                     
-                    <div className="flex gap-4 items-end">
-                      <div className="space-y-2 flex-1">
-                        <Label className="text-blue-900">Your Name / Alias</Label>
-                        <Input id="author_name" placeholder="e.g. Ivan" className="bg-white" />
+                    <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-end w-full">
+                      <div className="space-y-2 w-full sm:flex-1">
+                        <Label className="text-blue-900">Username</Label>
+                        <Input id="author_name" className="bg-white" />
                       </div>
-                      <div className="space-y-2 flex-1">
+                      <div className="space-y-2 w-full sm:flex-1">
                         <Label className="text-blue-900">Portfolio Name</Label>
-                        <Input id="port_name" placeholder="e.g. new portfolio" className="bg-white" />
+                        <Input id="port_name" className="bg-white" />
                       </div>
                       <Button 
-                        className="bg-blue-600 hover:bg-blue-700 text-white"
+                        className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto"
                         onClick={async () => {
                           const author = document.getElementById('author_name').value || "Anonymous";
                           const name = document.getElementById('port_name').value || "Unnamed Portfolio";
@@ -494,7 +493,7 @@ export const ResultsPanel = ({ results, loading, error, baseCapital, dayHorizon,
 
                   {/* Leaderboard Table */}
                   <div>
-                    <h3 className="text-sm font-semibold text-slate-700 mb-4">Top 10 Portfolios (Ranked by Sortino Ratio)</h3>
+                    <h3 className="text-sm font-semibold text-slate-700 mb-4">Top Portfolios (Ranked by Sortino Ratio)</h3>
                     <div className="border rounded-md overflow-x-auto">
                       <table className="w-full text-sm text-left">
                         <thead className="text-xs text-slate-500 uppercase bg-slate-50 border-b">
